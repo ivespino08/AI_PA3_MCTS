@@ -5,21 +5,21 @@ class Connect4Tree:
 
     def __init__(self):
         self.board = np.full((6,7),"O")
-        self.moves = 0
+        self.moves = 0                                                  #Keep track of the total number of moves made this game
 
     def drop(self, column, color):
         i = 0
-        while i < len(self.board) and self.board[i][column] == "O":
+        while i < len(self.board) and self.board[i][column] == "O":     #Find the lowest occupied row in the given column
             i += 1
 
-        if i == 0:
+        if i == 0:                                                      #If the column is full, display message and try again
             self.column_full(column+1)
             return False, False
         
-        self.board[i-1][column] = color
+        self.board[i-1][column] = color                                 #Drop the token in the row above the lowest occupied
         self.moves += 1
 
-        did_win = self.check_win(color, (i-1, column))
+        did_win = self.check_win(color, (i-1, column))                  #Look around the token in all directions to see if player won
         return True, did_win
 
     def column_full(self, column):
@@ -130,14 +130,14 @@ class Connect4Tree:
 def uniform_random(board, color):
     token_dropped = False
     did_win = False
-    while not token_dropped:
+    while not token_dropped:                                        #Run until a token is successfully dropped
         col_chosen = randint(0, len(board.board[0])-1)
         token_dropped, did_win = board.drop(col_chosen, color)
         
     return did_win
 
     
-def game(player1, player2):
+def game(player1, player2):                                 #Takes algorithms as parameters for each player
     board = Connect4Tree()
     print(board.board)
 
@@ -150,7 +150,7 @@ def game(player1, player2):
         print("\nPlayer 1 move:")
         print(board.board)
 
-        if board.is_full():
+        if board.is_full():                                     # If the Board is full end the game
             print("The board is full. It's a tie!")
             break
 
@@ -169,7 +169,7 @@ def game(player1, player2):
 
 if __name__ == "__main__":
 
-    game(uniform_random, uniform_random)
+    game(player1=uniform_random, player2=uniform_random)              #Type in name of your algorithm into a player to run it
     
 
     
